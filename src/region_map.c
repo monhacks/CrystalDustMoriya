@@ -129,6 +129,7 @@ static const u32 *GetRegionMapTilemap(u8 region);
 static const u16 sRegionMapCursorPal[] = INCBIN_U16("graphics/region_map/cursor.gbapal");
 static const u32 sRegionMapCursorGfxLZ[] = INCBIN_U32("graphics/region_map/cursor.4bpp.lz");
 static const u16 sRegionMapPal[] = INCBIN_U16("graphics/region_map/region_map.gbapal");
+static const u16 sRegionMapGirlPal[] = INCBIN_U16("graphics/region_map/region_map_girl.gbapal");
 static const u32 sRegionMapTileset[] = INCBIN_U32("graphics/region_map/region_map.4bpp.lz");
 static const u32 sRegionMapJohtoTilemap[] = INCBIN_U32("graphics/region_map/johto_map.bin.lz");
 static const u32 sRegionMapKantoTilemap[] = INCBIN_U32("graphics/region_map/kanto_map.bin.lz");
@@ -624,6 +625,9 @@ bool8 LoadRegionMapGfx(bool8 shouldBuffer)
         case 2:
             if (!FreeTempTileDataBuffersIfPossible())
             {
+                if (gSaveBlock2Ptr->playerGender == FEMALE)
+                    LoadPalette(sRegionMapGirlPal, 0x70, sizeof(sRegionMapPal));
+                else
                 LoadPalette(sRegionMapPal, 0x70, sizeof(sRegionMapPal));
                 LoadPalette(sRegionMapTownNames_Pal, 0xE0, sizeof(sRegionMapTownNames_Pal));
             }
