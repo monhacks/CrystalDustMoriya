@@ -43,3 +43,4 @@ include/constants/map_groups.h
 data/scripts/move_tutors.inc
 CrystalDust-*.png
 *.ase
+*.mp4
