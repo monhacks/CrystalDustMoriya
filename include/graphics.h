@@ -4207,6 +4207,7 @@ extern const u32 gPokenavRibbonsSummaryBg_Gfx[];
 extern const u32 gPokenavRibbonsSummaryBg_Tilemap[];
 
 extern const u32 gPageInfoTilemap[];
+extern const u32 gPageBGTilemap[];
 extern const u32 gUnknown_08D98CC8[];
 extern const u32 gPageSkillsTilemap[];
 extern const u32 gPageBattleMovesTilemap[];
@@ -4216,6 +4217,10 @@ extern const u16 gUnknown_08D85620[];
 extern const u16 gSummaryScreenWindow_Tilemap[];
 extern const u32 gMoveTypes_Pal[];
 extern const u32 gStatusScreenBitmap[];
+
+extern const u32 gPokeSummary_HpBarTiles[];
+extern const u32 gPokeSummary_ExpBarTiles[];
+extern const u16 gPokeSummary_ExpBarPals[];
 
 extern const u16 gSummaryScreenPowAcc_Tilemap[];
 extern const u16 gSummaryScreenAppealJam_Tilemap[];

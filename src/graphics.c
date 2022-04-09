@@ -1143,11 +1143,16 @@ const u32 gSummaryMoveSelect_Pal[] = INCBIN_U32("graphics/interface/summary_fram
 
 const u32 gStatusScreenBitmap[] = INCBIN_U32("graphics/interface_fr/trainer_memo.4bpp.lz");
 const u32 gStatusScreenPalette[] = INCBIN_U32("graphics/interface_fr/trainer_memo_pal1.gbapal.lz");
+const u32 gPageBGTilemap[] = INCBIN_U32("graphics/interface_fr/trainer_memo_bg.bin.lz");
 const u32 gPageInfoTilemap[] = INCBIN_U32("graphics/interface_fr/trainer_memo.bin.lz");
 const u32 gPageSkillsTilemap[] = INCBIN_U32("graphics/interface_fr/trainer_memo_2.bin.lz");
 const u32 gPageBattleMovesTilemap[] = INCBIN_U32("graphics/interface_fr/trainer_memo_3.bin.lz");
 const u32 gPageContestMovesTilemap[] = INCBIN_U32("graphics/interface_fr/trainer_memo_4.bin.lz");
 const u32 gUnknown_08D98CC8[] = INCBIN_U32("graphics/interface/status_tilemap0.bin.lz");
+
+const u32 gPokeSummary_ExpBarTiles[] = INCBIN_U32("graphics/interface_fr/summary_exp_bar.4bpp.lz");
+const u32 gPokeSummary_HpBarTiles[] = INCBIN_U32("graphics/interface_fr/summary_hp_bar.4bpp.lz");
+const u16 gPokeSummary_ExpBarPals[] = INCBIN_U16("graphics/interface_fr/summary_exp_bar.gbapal"); // hp bar uses this too
 
 const u32 gBagMaleTiles[] = INCBIN_U32("graphics/item_menu/bag_male.4bpp.lz");
 const u32 gBagFemaleTiles[] = INCBIN_U32("graphics/item_menu/bag_female.4bpp.lz");
@@ -1276,8 +1281,8 @@ const u32 gPokedexSearchMenu_Gfx[] = INCBIN_U32("graphics/pokedex/search_menu.4b
 const u32 gPokedexSearchMenuNational_Tilemap[] = INCBIN_U32("graphics/pokedex/search_menu_national.bin.lz");
 const u32 gPokedexSearchMenuHoenn_Tilemap[] = INCBIN_U32("graphics/pokedex/search_menu_hoenn.bin.lz");
 
-const u16 gSummaryScreenPowAcc_Tilemap[] = INCBIN_U16("graphics/interface/powacc_tilemap.bin");
-const u16 gSummaryScreenAppealJam_Tilemap[] = INCBIN_U16("graphics/interface/appealjam_tilemap.bin");
+const u16 gSummaryScreenPowAcc_Tilemap[] = INCBIN_U16("graphics/interface_fr/trainer_memo_powacc.bin.lz");
+const u16 gSummaryScreenAppealJam_Tilemap[] = INCBIN_U16("graphics/interface_fr/trainer_memo_powacc.bin.lz");
 const u16 gSummaryScreenWindow_Tilemap[] = INCBIN_U16("graphics/interface/summary.bin");
 
 const u16 gIntroCopyright_Pal[] = INCBIN_U16("graphics/intro/copyright.gbapal");
