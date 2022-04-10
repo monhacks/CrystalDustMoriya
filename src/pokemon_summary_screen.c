@@ -108,7 +108,7 @@ enum {
 #define PSS_DATA_WINDOW_MOVE_PP 1
 #define PSS_DATA_WINDOW_MOVE_DESCRIPTION 2
 
-#define MOVE_SELECTOR_SPRITES_COUNT 10
+#define MOVE_SELECTOR_SPRITES_COUNT 15
 // for the spriteIds field in PokemonSummaryScreenData
 enum
 {
@@ -370,11 +370,11 @@ static const struct BgTemplate sBgTemplates[] =
 struct TilemapCtrl
 {
     const u16 *gfx;
-    u16 field_4; //blank tile
-    u8 field_6; //width?
-    u8 field_7; //height
-    u8 field_8; //posx
-    u8 field_9; //posy
+    u16 blank; //blank tile
+    u8 width; //width?
+    u8 hight; //height
+    u8 posx; //posx
+    u8 posy; //posy
 };
 
 struct ExpBarObjs
@@ -408,7 +408,7 @@ static const struct TilemapCtrl sBattleMoveTilemapCtrl =
 };
 static const struct TilemapCtrl sContestMoveTilemapCtrl =
 {
-    gSummaryScreenAppealJam_Tilemap, 0, 10, 7, 0, 45
+    gSummaryScreenAppealJam_Tilemap, 0, 15, 14, 0, 38
 };
 static const s8 sMultiBattleOrder[] = {0, 2, 3, 1, 4, 5};
 
@@ -1052,53 +1052,53 @@ static const struct OamData sOamData_MoveSelector =
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
     .bpp = ST_OAM_4BPP,
-    .shape = SPRITE_SHAPE(16x16),
+    .shape = SPRITE_SHAPE(8x32),
     .x = 0,
     .matrixNum = 0,
-    .size = SPRITE_SIZE(16x16),
+    .size = SPRITE_SIZE(8x32),
     .tileNum = 0,
     .priority = 1,
     .paletteNum = 0,
     .affineParam = 0,
 };
 static const union AnimCmd sSpriteAnim_MoveSelector0[] = {
-    ANIMCMD_FRAME(0, 0, FALSE, FALSE),
+    ANIMCMD_FRAME(32, 0, FALSE, FALSE),
     ANIMCMD_END
 };
 static const union AnimCmd sSpriteAnim_MoveSelector1[] = {
-    ANIMCMD_FRAME(4, 0, FALSE, FALSE),
+    ANIMCMD_FRAME(32, 0, FALSE, FALSE),
     ANIMCMD_END
 };
 static const union AnimCmd sSpriteAnim_MoveSelector2[] = {
-    ANIMCMD_FRAME(8, 0, FALSE, FALSE),
+    ANIMCMD_FRAME(32, 0, FALSE, FALSE),
     ANIMCMD_END
 };
 static const union AnimCmd sSpriteAnim_MoveSelector3[] = {
-    ANIMCMD_FRAME(12, 0, FALSE, FALSE),
+    ANIMCMD_FRAME(32, 0, FALSE, FALSE),
     ANIMCMD_END
 };
 static const union AnimCmd sSpriteAnim_MoveSelectorLeft[] = {
-    ANIMCMD_FRAME(16, 0, FALSE, FALSE),
+    ANIMCMD_FRAME(0, 0, FALSE, FALSE),
     ANIMCMD_END
 };
 static const union AnimCmd sSpriteAnim_MoveSelectorRight[] = {
-    ANIMCMD_FRAME(16, 0, TRUE, FALSE),
+    ANIMCMD_FRAME(0, 0, TRUE, FALSE),
     ANIMCMD_END
 };
 static const union AnimCmd sSpriteAnim_MoveSelectorMiddle[] = {
-    ANIMCMD_FRAME(20, 0, FALSE, FALSE),
+    ANIMCMD_FRAME(8, 0, FALSE, FALSE),
     ANIMCMD_END
 };
 static const union AnimCmd sSpriteAnim_MoveSelector7[] = {
-    ANIMCMD_FRAME(24, 0, FALSE, FALSE),
+    ANIMCMD_FRAME(4, 0, FALSE, FALSE),
     ANIMCMD_END
 };
 static const union AnimCmd sSpriteAnim_MoveSelector8[] = {
-    ANIMCMD_FRAME(24, 0, TRUE, FALSE),
+    ANIMCMD_FRAME(4, 0, TRUE, FALSE),
     ANIMCMD_END
 };
 static const union AnimCmd sSpriteAnim_MoveSelector9[] = {
-    ANIMCMD_FRAME(28, 0, FALSE, FALSE),
+    ANIMCMD_FRAME(12, 0, FALSE, FALSE),
     ANIMCMD_END
 };
 // All except left, middle and right are unused
@@ -1604,7 +1604,7 @@ static void SetDefaultTilemaps(void)
         SetBgTilemapBuffer(1, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_CONTEST_MOVES][0]);
         SetBgTilemapBuffer(2, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_BATTLE_MOVES][0]);
         ChangeBgX(2, 0x10000, 1);
-        ClearWindowTilemap(PSS_LABEL_WINDOW_PORTRAIT_SPECIES);
+        //ClearWindowTilemap(PSS_LABEL_WINDOW_PORTRAIT_SPECIES);
         //ClearWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS);
     }
 
@@ -2016,7 +2016,7 @@ static void SwitchToMoveSelection(u8 taskId)
 
     sMonSummaryScreen->firstMoveIndex = 0;
     move = sMonSummaryScreen->summary.moves[sMonSummaryScreen->firstMoveIndex];
-    ClearWindowTilemap(PSS_LABEL_WINDOW_PORTRAIT_SPECIES);
+    //ClearWindowTilemap(PSS_LABEL_WINDOW_PORTRAIT_SPECIES);
     if (!gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_STATUS]].invisible)
         //ClearWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS);
     HandlePowerAccTilemap(9, -3);
@@ -2122,8 +2122,8 @@ static void ChangeSelectedMove(s16 *taskData, s8 direction, u8 *moveIndexPtr)
     if ((*moveIndexPtr == MAX_MON_MOVES && sMonSummaryScreen->newMove == MOVE_NONE)
         || taskData[1] == 1)
     {
-        ClearWindowTilemap(PSS_LABEL_WINDOW_PORTRAIT_SPECIES);
-        if (!gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_STATUS]].invisible)
+        //ClearWindowTilemap(PSS_LABEL_WINDOW_PORTRAIT_SPECIES);
+        //if (!gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_STATUS]].invisible)
             //ClearWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS);
         ScheduleBgCopyTilemapToVram(0);
         HandlePowerAccTilemap(9, -3);
@@ -2535,33 +2535,33 @@ static void DrawPagination(void) // Updates the pagination dots at the top of th
 static void ChangeTilemap(const struct TilemapCtrl *unkStruct, u16 *dest, u8 c, bool8 d)
 {
     u16 i;
-    u16 *alloced = Alloc(unkStruct->field_6 * 2 * unkStruct->field_7);
-    CpuFill16(unkStruct->field_4, alloced, unkStruct->field_6 * 2 * unkStruct->field_7);
-    if (unkStruct->field_6 != c)
+    u16 *alloced = Alloc(unkStruct->width * 2 * unkStruct->hight);
+    CpuFill16(unkStruct->blank, alloced, unkStruct->width * 2 * unkStruct->hight);
+    if (unkStruct->width != c)
     {
         if (!d)
         {
-            for (i = 0; i < unkStruct->field_7; i++)
-                CpuCopy16(&unkStruct->gfx[c + unkStruct->field_6 * i], &alloced[unkStruct->field_6 * i], (unkStruct->field_6 - c) * 2);
+            for (i = 0; i < unkStruct->hight; i++)
+                CpuCopy16(&unkStruct->gfx[c + unkStruct->width * i], &alloced[unkStruct->width * i], (unkStruct->width - c) * 2);
         }
         else
         {
-            for (i = 0; i < unkStruct->field_7; i++)
-                CpuCopy16(&unkStruct->gfx[unkStruct->field_6 * i], &alloced[c + unkStruct->field_6 * i], (unkStruct->field_6 - c) * 2);
+            for (i = 0; i < unkStruct->hight; i++)
+                CpuCopy16(&unkStruct->gfx[unkStruct->width * i], &alloced[c + unkStruct->width * i], (unkStruct->width - c) * 2);
         }
     }
 
-    for (i = 0; i < unkStruct->field_7; i++)
-        CpuCopy16(&alloced[unkStruct->field_6 * i], &dest[(unkStruct->field_9 + i) * 32 + unkStruct->field_8], unkStruct->field_6 * 2);
+    for (i = 0; i < unkStruct->hight; i++)
+        CpuCopy16(&alloced[unkStruct->width * i], &dest[(unkStruct->posy + i) * 32 + unkStruct->posx], unkStruct->width * 2);
 
     Free(alloced);
 }
 
 static void HandlePowerAccTilemap(u16 a, s16 b)
 {
-    if (b > sBattleMoveTilemapCtrl.field_6)
-        b = sBattleMoveTilemapCtrl.field_6;
-    if (b == 0 || b == sBattleMoveTilemapCtrl.field_6)
+    if (b > sBattleMoveTilemapCtrl.width)
+        b = sBattleMoveTilemapCtrl.width;
+    if (b == 0 || b == sBattleMoveTilemapCtrl.width)
     {
         ChangeTilemap(&sBattleMoveTilemapCtrl, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_BATTLE_MOVES][0], b, TRUE);
     }
@@ -2583,12 +2583,12 @@ static void Task_ShowPowerAccWindow(u8 taskId)
     {
         data[1] = 0;
     }
-    else if (data[1] > sBattleMoveTilemapCtrl.field_6)
+    else if (data[1] > sBattleMoveTilemapCtrl.width)
     {
-        data[1] = sBattleMoveTilemapCtrl.field_6;
+        data[1] = sBattleMoveTilemapCtrl.width;
     }
     ChangeTilemap(&sBattleMoveTilemapCtrl, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_BATTLE_MOVES][0], data[1], TRUE);
-    if (data[1] <= 0 || data[1] >= sBattleMoveTilemapCtrl.field_6)
+    if (data[1] <= 0 || data[1] >= sBattleMoveTilemapCtrl.width)
     {
         if (data[0] < 0)
         {
@@ -2610,10 +2610,10 @@ static void Task_ShowPowerAccWindow(u8 taskId)
 
 static void HandleAppealJamTilemap(u16 a, s16 b, u16 move)
 {
-    if (b > sContestMoveTilemapCtrl.field_6)
-        b = sContestMoveTilemapCtrl.field_6;
+    if (b > sContestMoveTilemapCtrl.width)
+        b = sContestMoveTilemapCtrl.width;
 
-    if (b == 0 || b == sContestMoveTilemapCtrl.field_6)
+    if (b == 0 || b == sContestMoveTilemapCtrl.width)
     {
         ChangeTilemap(&sContestMoveTilemapCtrl, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_CONTEST_MOVES][0], b, TRUE);
     }
@@ -2636,12 +2636,12 @@ static void Task_ShowAppealJamWindow(u8 taskId)
     {
         data[1] = 0;
     }
-    else if (data[1] > sContestMoveTilemapCtrl.field_6)
+    else if (data[1] > sContestMoveTilemapCtrl.width)
     {
-        data[1] = sContestMoveTilemapCtrl.field_6;
+        data[1] = sContestMoveTilemapCtrl.width;
     }
     ChangeTilemap(&sContestMoveTilemapCtrl, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_CONTEST_MOVES][0], data[1], TRUE);
-    if (data[1] <= 0 || data[1] >= sContestMoveTilemapCtrl.field_6)
+    if (data[1] <= 0 || data[1] >= sContestMoveTilemapCtrl.width)
     {
         if (data[0] < 0)
         {
@@ -2666,9 +2666,9 @@ static void Task_ShowAppealJamWindow(u8 taskId)
 
 static void HandleStatusTilemap(u16 a, s16 b)
 {
-    if (b > sStatusTilemapCtrl1.field_6)
-        b = sStatusTilemapCtrl1.field_6;
-    if (b == 0 || b == sStatusTilemapCtrl1.field_6)
+    if (b > sStatusTilemapCtrl1.width)
+        b = sStatusTilemapCtrl1.width;
+    if (b == 0 || b == sStatusTilemapCtrl1.width)
     {
         //ChangeTilemap(&sStatusTilemapCtrl1, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_INFO][0], b, FALSE);
         //ChangeTilemap(&sStatusTilemapCtrl2, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_INFO][0], b, FALSE);
@@ -2687,12 +2687,12 @@ static void Task_ShowStatusWindow(u8 taskId)
     data[1] += data[0];
     if (data[1] < 0)
         data[1] = 0;
-    else if (data[1] > sStatusTilemapCtrl1.field_6)
-        data[1] = sStatusTilemapCtrl1.field_6;
+    else if (data[1] > sStatusTilemapCtrl1.width)
+        data[1] = sStatusTilemapCtrl1.width;
     //ChangeTilemap(&sStatusTilemapCtrl1, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_INFO][0], data[1], FALSE);
     //ChangeTilemap(&sStatusTilemapCtrl2, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_INFO][0], data[1], FALSE);
     ScheduleBgCopyTilemapToVram(3);
-    if (data[1] <= 0 || data[1] >= sStatusTilemapCtrl1.field_6)
+    if (data[1] <= 0 || data[1] >= sStatusTilemapCtrl1.width)
     {
         if (data[0] < 0)
         {
@@ -3196,7 +3196,7 @@ static void PrintPageNamesAndStats(void)
     if (iconXPos < 0)
         iconXPos = 0;
     PrintAOrBButtonIcon(PSS_LABEL_WINDOW_PROMPT_SWITCH, FALSE, iconXPos);
-    PrintTextOnWindow(PSS_LABEL_WINDOW_PROMPT_SWITCH, gText_Switch, stringXPos, 1, 0, 0);
+    PrintTextOnWindow(PSS_LABEL_WINDOW_PROMPT_SWITCH, gText_Switch, stringXPos, 1, 0, 1);
 
     PrintTextOnWindow(PSS_LABEL_WINDOW_POKEMON_INFO_RENTAL, gText_RentalPkmn, 0, 1, 0, 1);
     PrintTextOnWindow(PSS_LABEL_WINDOW_POKEMON_SKILLS_EXP, gText_ExpPoints, 4, 7, 0, 0);
@@ -4076,7 +4076,7 @@ static void PrintNewMoveDetailsOrCancelText(void)
 
     if (sMonSummaryScreen->newMove == MOVE_NONE)
     {
-        PrintTextOnWindow(windowId1, gText_Cancel, 0, 65, 0, 6);
+        PrintTextOnWindow(windowId2, gText_Cancel, 0, 69, 0, 6);
     }
     else
     {
@@ -4479,10 +4479,10 @@ static void CreateMoveSelectorSprites(u8 idArrayStart)
 
         for (i = 0; i < MOVE_SELECTOR_SPRITES_COUNT; i++)
         {
-            spriteIds[i] = CreateSprite(&sMoveSelectorSpriteTemplate, i * 16 + 89, 40, subpriority);
+            spriteIds[i] = CreateSprite(&sMoveSelectorSpriteTemplate, i * 8 + 124, 34, subpriority);
             if (i == 0)
                 StartSpriteAnim(&gSprites[spriteIds[i]], 4); // left
-            else if (i == 9)
+            else if (i == 14)
                 StartSpriteAnim(&gSprites[spriteIds[i]], 5); // right, actually the same as left, but flipped
             else
                 StartSpriteAnim(&gSprites[spriteIds[i]], 6); // middle
@@ -4511,9 +4511,9 @@ static void SpriteCb_MoveSelector(struct Sprite *sprite)
     }
 
     if (sprite->data[0] == SPRITE_ARR_ID_MOVE_SELECTOR1)
-        sprite->y2 = sMonSummaryScreen->firstMoveIndex * 16;
+        sprite->y2 = sMonSummaryScreen->firstMoveIndex * 28;
     else
-        sprite->y2 = sMonSummaryScreen->secondMoveIndex * 16;
+        sprite->y2 = sMonSummaryScreen->secondMoveIndex * 28;
 }
 
 static void DestroyMoveSelectorSprites(u8 firstArrayId)
@@ -4533,7 +4533,7 @@ static void SetMainMoveSelectorColor(u8 which)
     {
         if (i == 0)
             StartSpriteAnim(&gSprites[spriteIds[i]], which + 4);
-        else if (i == 9)
+        else if (i == 14)
             StartSpriteAnim(&gSprites[spriteIds[i]], which + 5);
         else
             StartSpriteAnim(&gSprites[spriteIds[i]], which + 6);
