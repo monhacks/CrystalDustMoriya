@@ -2014,8 +2014,8 @@ static void Task_SwitchFromMoveDetails(u8 taskId)
                 SetSpriteInvisibility(SPRITE_ARR_ID_ITEM, FALSE);
 
             CreateSetStatusSprite();
-            sMonSummaryScreen->markingsSprite->x = 57;
-            sMonSummaryScreen->markingsSprite->y = 132;
+            sMonSummaryScreen->markingsSprite->x = 20;
+            sMonSummaryScreen->markingsSprite->y = 88;
             PrintInfoBar(sMonSummaryScreen->currPageIndex, FALSE);
             data[0]++;
             break;
@@ -3188,13 +3188,13 @@ static void SetMonTypeIcons(void)
 
     if (gBaseStats[summary->species].type1 != gBaseStats[summary->species].type2)
     {
-        SetTypeSpritePosAndPal(gBaseStats[summary->species].type1, 167, 65, SPRITE_ARR_ID_TYPE);
-        SetTypeSpritePosAndPal(gBaseStats[summary->species].type2, 201, 65, SPRITE_ARR_ID_TYPE + 1);
+        SetTypeSpritePosAndPal(gBaseStats[summary->species].type1, 167, 49, SPRITE_ARR_ID_TYPE);
+        SetTypeSpritePosAndPal(gBaseStats[summary->species].type2, 201, 49, SPRITE_ARR_ID_TYPE + 1);
         SetSpriteInvisibility(SPRITE_ARR_ID_TYPE + 1, FALSE);
     }
     else
     {
-        SetTypeSpritePosAndPal(gBaseStats[summary->species].type1, 184, 65, SPRITE_ARR_ID_TYPE);
+        SetTypeSpritePosAndPal(gBaseStats[summary->species].type1, 184, 49, SPRITE_ARR_ID_TYPE);
         SetSpriteInvisibility(SPRITE_ARR_ID_TYPE + 1, TRUE);
     }
 }
@@ -3322,7 +3322,7 @@ static void PlayMonCry(void)
 static u8 CreateMonSprite(struct Pokemon *unused)
 {
     struct PokeSummary *summary = &sMonSummaryScreen->summary;
-    u8 spriteId = CreateSprite(&gMultiuseSpriteTemplate, 40, 85, 5);
+    u8 spriteId = CreateSprite(&gMultiuseSpriteTemplate, 60, 65, 5);
     FreeSpriteOamMatrix(&gSprites[spriteId]);
     gSprites[spriteId].data[0] = summary->species2;
     gSprites[spriteId].data[2] = 0;
@@ -3389,8 +3389,8 @@ static void CreateMonMarkingsSprite(struct Pokemon *mon)
         return;
 
     StartSpriteAnim(sprite, GetMonData(mon, MON_DATA_MARKINGS));
-    sMonSummaryScreen->markingsSprite->x = 57;
-    sMonSummaryScreen->markingsSprite->y = 132;
+    sMonSummaryScreen->markingsSprite->x = 20;
+    sMonSummaryScreen->markingsSprite->y = 88;
     sMonSummaryScreen->markingsSprite->oam.priority = 1;
 }
 
