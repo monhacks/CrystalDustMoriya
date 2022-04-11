@@ -980,7 +980,7 @@ const u32 gBattleArenaJudgementSymbolsGfx[] = INCBIN_U32("graphics/battle_fronti
 const u32 gBattleArenaJudgementSymbolsPalette[] = INCBIN_U32("graphics/battle_frontier/arena_judgement_symbols.gbapal.lz");
 
 const u32 gBattleWindowTextPalette[] = INCBIN_U32("graphics/battle_interface/text.gbapal.lz");
-const u16 gUnknown_08D85620[] = INCBIN_U16("graphics/battle_frontier/text_pp.gbapal");
+const u16 gPPTextPalette[] = INCBIN_U16("graphics/battle_frontier/text_pp.gbapal");
 
 const u16 gTilesetAnims_BattleDomePals0_0[] = INCBIN_U16("graphics/battle_frontier/dome_anim1.gbapal");
 const u16 gTilesetAnims_BattleDomePals0_1[] = INCBIN_U16("graphics/battle_frontier/dome_anim2.gbapal");
@@ -1150,9 +1150,9 @@ const u32 gPageBattleMovesTilemap[] = INCBIN_U32("graphics/interface_fr/trainer_
 const u32 gPageContestMovesTilemap[] = INCBIN_U32("graphics/interface_fr/trainer_memo_4.bin.lz");
 const u32 gUnknown_08D98CC8[] = INCBIN_U32("graphics/interface/status_tilemap0.bin.lz");
 
-const u32 gPokeSummary_ExpBarTiles[] = INCBIN_U32("graphics/interface_fr/summary_exp_bar.4bpp.lz");
-const u32 gPokeSummary_HpBarTiles[] = INCBIN_U32("graphics/interface_fr/summary_hp_bar.4bpp.lz");
-const u16 gPokeSummary_ExpBarPals[] = INCBIN_U16("graphics/interface_fr/summary_exp_bar.gbapal"); // hp bar uses this too
+const u32 gSummaryExpBar_Tiles[] = INCBIN_U32("graphics/summary_screen/exp_bar.4bpp.lz");
+const u32 gSummaryHealthBar_Tiles[] = INCBIN_U32("graphics/summary_screen/hp_bar.4bpp.lz");
+const u16 gExpBarHealthBarPal[] = INCBIN_U16("graphics/summary_screen/exp_hp_bar.gbapal");
 
 const u32 gBagMaleTiles[] = INCBIN_U32("graphics/item_menu/bag_male.4bpp.lz");
 const u32 gBagFemaleTiles[] = INCBIN_U32("graphics/item_menu/bag_female.4bpp.lz");
@@ -1281,9 +1281,9 @@ const u32 gPokedexSearchMenu_Gfx[] = INCBIN_U32("graphics/pokedex/search_menu.4b
 const u32 gPokedexSearchMenuNational_Tilemap[] = INCBIN_U32("graphics/pokedex/search_menu_national.bin.lz");
 const u32 gPokedexSearchMenuHoenn_Tilemap[] = INCBIN_U32("graphics/pokedex/search_menu_hoenn.bin.lz");
 
-const u16 gSummaryScreenPowAcc_Tilemap[] = INCBIN_U16("graphics/interface_fr/trainer_memo_powacc.bin.lz");
-const u16 gSummaryScreenAppealJam_Tilemap[] = INCBIN_U16("graphics/interface_fr/trainer_memo_powacc.bin.lz");
-const u16 gSummaryScreenWindow_Tilemap[] = INCBIN_U16("graphics/interface/summary.bin");
+const u16 gSummaryScreen_MoveEffect_Battle_Tilemap[] = INCBIN_U16("graphics/summary_screen/effect_battle.bin");
+const u16 gSummaryScreen_MoveEffect_Contest_Tilemap[] = INCBIN_U16("graphics/summary_screen/effect_contest.bin");
+const u16 gSummaryScreen_MoveEffect_Cancel_Tilemap[] = INCBIN_U16("graphics/summary_screen/effect_cancel.bin");
 
 const u16 gIntroCopyright_Pal[] = INCBIN_U16("graphics/intro/copyright.gbapal");
 const u32 gIntroCopyright_Gfx[] = INCBIN_U32("graphics/intro/copyright.4bpp.lz");
@@ -1567,3 +1567,21 @@ static const u8 sUnused2[]       = {0x02};
 static const u8 sEmpty5[0x3242]  = {0};
 static const u8 sUnused3[]       = {0x40};
 static const u8 sEmpty6[0x13]    = {0};
+
+// NEW Summary Screen
+const u32 gSummaryScreenTiles[] = INCBIN_U32("graphics/summary_screen/tiles.4bpp.lz");
+const u32 gSummaryScreenBackgroundTilemap[] = INCBIN_U32("graphics/summary_screen/background.bin.lz");
+const u32 gSummaryScreenPalette[] = INCBIN_U32("graphics/summary_screen/tiles.gbapal.lz");
+// 1 - Info
+const u32 gSummaryScreenPageInfoTilemap[] = INCBIN_U32("graphics/summary_screen/page_info.bin.lz");
+const u32 gSummaryScreenPageInfoEggTilemap[] = INCBIN_U32("graphics/summary_screen/page_info_egg.bin.lz");
+// 2 - Skills
+const u32 gSummaryScreenPageSkillsTilemap[] = INCBIN_U32("graphics/summary_screen/page_skills.bin.lz");
+// 3 - Battle Moves
+const u32 gSummaryScreenPageMovesTilemap[] = INCBIN_U32("graphics/summary_screen/page_moves.bin.lz");
+const u32 gSummaryScreenPageMoveDetailsTilemap[] = INCBIN_U32("graphics/summary_screen/page_moves_selected.bin.lz");
+const u32 gSummaryScreenPageNewMoveTilemap[] = INCBIN_U32("graphics/summary_screen/page_new_move.bin.lz");
+// 4 - Contest Moves
+const u32 gSummaryScreenPageContestMovesTilemap[] = INCBIN_U32("graphics/summary_screen/page_moves_contest.bin.lz");
+const u32 gSummaryScreenPageContestMoveDetailsTilemap[] = INCBIN_U32("graphics/summary_screen/page_moves_contest_selected.bin.lz");
+const u32 gSummaryScreenPageContestNewMoveTilemap[] = INCBIN_U32("graphics/summary_screen/page_new_move_contest.bin.lz");
