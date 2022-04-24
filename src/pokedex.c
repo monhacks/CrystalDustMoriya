@@ -17,6 +17,7 @@
 #include "pokedex.h"
 #include "pokedex_area_screen.h"
 #include "pokedex_cry_screen.h"
+#include "region_map.h"
 #include "scanline_effect.h"
 #include "sound.h"
 #include "sprite.h"
@@ -2424,7 +2425,7 @@ static void CreateMonDexNum(u16 entryNum, u8 left, u8 top, u16 unused)
     text[2] = CHAR_0 + dexNum / 100;
     text[3] = CHAR_0 + (dexNum % 100) / 10;
     text[4] = CHAR_0 + (dexNum % 100) % 10;
-    PrintMonDexNumAndName(0, 0, text, left, top);
+    PrintMonDexNumAndName(0, FONT_SMALL, text, left, top);
 }
 
 static void CreateCaughtBall(bool16 owned, u8 x, u8 y, u16 unused)
@@ -2444,7 +2445,7 @@ static u8 CreateMonName(u16 num, u8 left, u8 top)
         str = gSpeciesNames[num];
     else
         str = sText_TenDashes;
-    PrintMonDexNumAndName(0, 2, str, left, top);
+    PrintMonDexNumAndName(0, FONT_NORMAL, str, left, top);
     return StringLength(str);
 }
 
@@ -2856,16 +2857,16 @@ static void CreateInterfaceSprites(u8 page)
             u16 seenOwnedCount;
 
             // Seen text
-            CreateSprite(&sSeenOwnTextSpriteTemplate, 48, 120, 1);
+            CreateSprite(&sSeenOwnTextSpriteTemplate, 45, 120, 1);
             // Own text
-            spriteId = CreateSprite(&sSeenOwnTextSpriteTemplate, 79, 120, 1);
+            spriteId = CreateSprite(&sSeenOwnTextSpriteTemplate, 76, 120, 1);
             StartSpriteAnim(&gSprites[spriteId], 1);
 
             // Hoenn text 
-            CreateSprite(&sHoennNationalTextSpriteTemplate, 17, 125, 1);
+            CreateSprite(&sHoennNationalTextSpriteTemplate, 20, 125, 1);
 
             // National text 
-            spriteId = CreateSprite(&sHoennNationalTextSpriteTemplate, 17, 135, 1);
+            spriteId = CreateSprite(&sHoennNationalTextSpriteTemplate, 20, 135, 1);
             StartSpriteAnim(&gSprites[spriteId], 1);
 
 
@@ -3151,7 +3152,7 @@ static void PrintInfoScreenText(const u8* str, u8 left, u8 top)
     color[1] = 1;
     color[2] = 4;
 
-    AddTextPrinterParameterized4(0, 2, left, top, 0, 0, color, -1, str);
+    AddTextPrinterParameterized4(0, FONT_NORMAL, left, top, 0, 0, color, -1, str);
 }
 static void PrintInfoScreenTextSmall(const u8* str, u8 left, u8 top)
 {
@@ -3160,7 +3161,7 @@ static void PrintInfoScreenTextSmall(const u8* str, u8 left, u8 top)
     color[1] = 1;
     color[2] = 4;
 
-    AddTextPrinterParameterized4(0, 0, left, top, 0, 0, color, -1, str);
+    AddTextPrinterParameterized4(0, FONT_SMALL, left, top, 0, 0, color, -1, str);
 }
 
 #define tMonSpriteId data[4]
@@ -3477,7 +3478,7 @@ static void Task_LoadAreaScreen(u8 taskId)
         gMain.state++;
         break;
     case 2:
-        ShowPokedexAreaScreen(NationalPokedexNumToSpecies(sPokedexListItem->dexNum), &sPokedexView->screenSwitchState);
+        ShowPokedexAreaScreen(NationalPokedexNumToSpecies(sPokedexListItem->dexNum), &sPokedexView->screenSwitchState, GetCurrentRegion());
         SetVBlankCallback(gPokedexVBlankCB);
         sPokedexView->screenSwitchState = 0;
         gMain.state = 0;
@@ -4105,6 +4106,7 @@ static void PrintMonInfo(u32 num, u32 value, u32 owned, u32 newEntry)
         value = NationalToJohtoOrder(num);
     else
         value = num;
+    PrintInfoScreenText(gText_PokedexInfo, GetStringCenterAlignXOffset(2, gText_PokedexInfo, 0xF0), 0);
     ConvertIntToDecimalStringN(StringCopy(str, gText_NumberClear01), value, STR_CONV_MODE_LEADING_ZEROS, 3);
     PrintInfoScreenTextSmall(str, 0x1E, 0x49);
     natNum = NationalPokedexNumToSpecies(num);
@@ -4112,7 +4114,7 @@ static void PrintMonInfo(u32 num, u32 value, u32 owned, u32 newEntry)
         name = gSpeciesNames[natNum];
     else
         name = sText_TenDashes2;
-    PrintInfoScreenText(name, 103, 16);
+    PrintInfoScreenText(name, 83, 16);
     if (owned)
     {
         CopyMonCategoryText(num, str2);
@@ -4122,18 +4124,18 @@ static void PrintMonInfo(u32 num, u32 value, u32 owned, u32 newEntry)
     {
         category = gText_5MarksPokemon;
     }
-    PrintInfoScreenText(category, 103, 32);
-    PrintInfoScreenText(gText_HTHeight, 103, 51);
-    PrintInfoScreenText(gText_WTWeight, 103, 66);
+    PrintInfoScreenText(category, 83, 32);
+    PrintInfoScreenText(gText_HTHeight, 83, 51);
+    PrintInfoScreenText(gText_WTWeight, 83, 66);
     if (owned)
     {
-        PrintMonHeight(gPokedexEntries[num].height, 150, 51);
-        PrintMonWeight(gPokedexEntries[num].weight, 150, 66);
+        PrintMonHeight(gPokedexEntries[num].height, 130, 51);
+        PrintMonWeight(gPokedexEntries[num].weight, 130, 66);
     }
     else
     {
-        PrintInfoScreenText(gText_UnkHeight, 150, 51);
-        PrintInfoScreenText(gText_UnkWeight, 150, 66);
+        PrintInfoScreenText(gText_UnkHeight, 130, 51);
+        PrintInfoScreenText(gText_UnkWeight, 130, 66);
     }
     if (owned)
         description = gPokedexEntries[num].description;
@@ -4439,7 +4441,7 @@ static void PrintInfoSubMenuText(u8 windowId, const u8 *str, u8 left, u8 top)
     color[1] = 1;
     color[2] = 4;
 
-    AddTextPrinterParameterized4(windowId, 2, left, top, 0, 0, color, -1, str);
+    AddTextPrinterParameterized4(windowId, FONT_NORMAL, left, top, 0, 0, color, -1, str);
 }
 
 static void UnusedPrintNum(u8 windowId, u16 num, u8 left, u8 top)
@@ -4747,7 +4749,7 @@ static void PrintSearchText(const u8 *str, u32 x, u32 y)
     color[0] = TEXT_COLOR_TRANSPARENT;
     color[1] = TEXT_DYNAMIC_COLOR_6;
     color[2] = TEXT_COLOR_DARK_GRAY;
-    AddTextPrinterParameterized4(0, 2, x, y, 0, 0, color, -1, str);
+    AddTextPrinterParameterized4(0, FONT_NORMAL, x, y, 0, 0, color, -1, str);
 }
 
 static void ClearSearchMenuRect(u32 x, u32 y, u32 width, u32 height)

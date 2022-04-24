@@ -270,6 +270,19 @@
 
 #define TEXT_SPEED_FF 0xFF
 
+enum {
+    FONT_SMALL,
+    FONT_EMERALD,
+    FONT_NORMAL,
+    FONT_RS,
+    FONT_RS_COPY_1,
+    FONT_RS_COPY_2,
+    FONT_UNOWN,
+    FONT_NARROW,
+    FONT_SMALL_NARROW, // Very similar to FONT_SMALL, some glyphs are narrower
+    FONT_BOLD, // JP glyph set only
+};
+
 enum
 {
     FONTATTR_MAX_LETTER_WIDTH,
@@ -429,6 +442,8 @@ void DecompressGlyphFont2(u16 glyphId, bool32 isJapanese);
 u32 GetGlyphWidthFont2(u16 glyphId, bool32 isJapanese);
 void DecompressGlyphFont1(u16 glyphId, bool32 isJapanese);
 u32 GetGlyphWidthFont1(u16 glyphId, bool32 isJapanese);
+void DecompressGlyphFont3(u16 glyphId, bool32 isJapanese);
+u32 GetGlyphWidthFont3(u16 glyphId, bool32 isJapanese);
 void DecompressGlyphFont9(u16 glyphId);
 
 // unk_text_util_2.c
