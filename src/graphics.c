@@ -1132,15 +1132,6 @@ const u32 gPartyMenuPokeball_Gfx[] = INCBIN_U32("graphics/interface/party_menu_p
 const u32 gPartyMenuPokeballSmall_Gfx[] = INCBIN_U32("graphics/interface/party_menu_pokeball_small.4bpp.lz"); //unused
 const u32 gPartyMenuPokeball_Pal[] = INCBIN_U32("graphics/interface/party_menu_pokeball.gbapal.lz");
 
-const u32 gStatusGfx_Icons[] = INCBIN_U32("graphics/interface/status_icons.4bpp.lz");
-const u32 gStatusPal_Icons[] = INCBIN_U32("graphics/interface/status_icons.gbapal.lz");
-
-const u32 gMoveTypes_Gfx[] = INCBIN_U32("graphics/types/move_types.4bpp.lz");
-const u32 gMoveTypes_Pal[] = INCBIN_U32("graphics/types/move_types.gbapal.lz");
-
-const u32 gSummaryMoveSelect_Gfx[] = INCBIN_U32("graphics/summary_screen/move_select.4bpp.lz");
-const u32 gSummaryMoveSelect_Pal[] = INCBIN_U32("graphics/summary_screen/move_select.gbapal.lz");
-
 const u32 gSummaryScreenTiles[] = INCBIN_U32("graphics/summary_screen/tiles.4bpp.lz");
 const u32 gSummaryScreenBackgroundTilemap[] = INCBIN_U32("graphics/summary_screen/background.bin.lz");
 const u32 gSummaryScreenPalette[] = INCBIN_U32("graphics/summary_screen/tiles.gbapal.lz");
@@ -1154,10 +1145,19 @@ const u32 gSummaryScreenPageContestMoveDetailsTilemap[] = INCBIN_U32("graphics/s
 
 const u32 gSummaryExpBar_Tiles[] = INCBIN_U32("graphics/summary_screen/exp_bar.4bpp.lz");
 const u32 gSummaryHealthBar_Tiles[] = INCBIN_U32("graphics/summary_screen/hp_bar.4bpp.lz");
-const u16 gExpBarHealthBar_Pal[] = INCBIN_U16("graphics/summary_screen/exp_hp_bar.gbapal");
+const u16 gExpBarHighHealthBar_Pal[] = INCBIN_U16("graphics/summary_screen/exp_high_hp_bar.gbapal");
+const u16 gExpBarMediumHealthBar_Pal[] = INCBIN_U16("graphics/summary_screen/exp_medium_hp_bar.gbapal");
+const u16 gExpBarLowHealthBar_Pal[] = INCBIN_U16("graphics/summary_screen/exp_low_hp_bar.gbapal");
 
 const u32 gShinyIcon_Gfx[] = INCBIN_U32("graphics/summary_screen/shiny_icon.4bpp.lz");
 const u16 gShinyIcon_Pal[] = INCBIN_U16("graphics/summary_screen/shiny_icon.gbapal");
+
+const u32 gMoveTypes_Gfx[] = INCBIN_U32("graphics/types/move_types.4bpp.lz");
+const u32 gMoveTypes_Pal[] = INCBIN_U32("graphics/types/move_types.gbapal.lz");
+const u32 gSummaryMoveSelect_Gfx[] = INCBIN_U32("graphics/summary_screen/move_select.4bpp.lz");
+const u32 gSummaryMoveSelect_Pal[] = INCBIN_U32("graphics/summary_screen/move_select.gbapal.lz");
+const u32 gStatusGfx_Icons[] = INCBIN_U32("graphics/interface/status_icons.4bpp.lz");
+const u32 gStatusPal_Icons[] = INCBIN_U32("graphics/interface/status_icons.gbapal.lz");
 
 const u32 gBagMaleTiles[] = INCBIN_U32("graphics/item_menu/bag_male.4bpp.lz");
 const u32 gBagFemaleTiles[] = INCBIN_U32("graphics/item_menu/bag_female.4bpp.lz");
@@ -1285,10 +1285,6 @@ const u16 gPokedexSearchMenu_Pal[] = INCBIN_U16("graphics/pokedex/search_menu.gb
 const u32 gPokedexSearchMenu_Gfx[] = INCBIN_U32("graphics/pokedex/search_menu.4bpp.lz");
 const u32 gPokedexSearchMenuNational_Tilemap[] = INCBIN_U32("graphics/pokedex/search_menu_national.bin.lz");
 const u32 gPokedexSearchMenuHoenn_Tilemap[] = INCBIN_U32("graphics/pokedex/search_menu_hoenn.bin.lz");
-
-const u16 gSummaryScreen_MoveEffect_Battle_Tilemap[] = INCBIN_U16("graphics/summary_screen/effect_battle.bin");
-const u16 gSummaryScreen_MoveEffect_Contest_Tilemap[] = INCBIN_U16("graphics/summary_screen/effect_contest.bin");
-const u16 gSummaryScreen_MoveEffect_Cancel_Tilemap[] = INCBIN_U16("graphics/summary_screen/effect_cancel.bin");
 
 const u16 gIntroCopyright_Pal[] = INCBIN_U16("graphics/intro/copyright.gbapal");
 const u32 gIntroCopyright_Gfx[] = INCBIN_U32("graphics/intro/copyright.4bpp.lz");
@@ -1540,7 +1536,7 @@ const u16 gMonIconPalettes[][16] =
 };
 
 const u16 gTitleScreenBgPalettes[] = INCBIN_U16("graphics/title_screen/pokemon_logo.gbapal",
-                                                "graphics/title_screen/emblem.gbapal", 
+                                                "graphics/title_screen/emblem.gbapal",
                                                 "graphics/title_screen/press_start.gbapal");
 
 const u32 sTitleScreenCloudsTilemap[] = INCBIN_U32("graphics/title_screen/press_start.bin.lz");

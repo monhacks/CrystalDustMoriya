@@ -4219,14 +4219,12 @@ extern const u32 gSummaryScreenPageContestMoveDetailsTilemap[];
 
 extern const u32 gSummaryExpBar_Tiles[];
 extern const u32 gSummaryHealthBar_Tiles[];
-extern const u16 gExpBarHealthBar_Pal[];
+extern const u16 gExpBarHighHealthBar_Pal[];
+extern const u16 gExpBarMediumHealthBar_Pal[];
+extern const u16 gExpBarLowHealthBar_Pal[];
 
 extern const u32 gShinyIcon_Gfx[];
 extern const u16 gShinyIcon_Pal[];
-
-extern const u16 gSummaryScreen_MoveEffect_Battle_Tilemap[];
-extern const u16 gSummaryScreen_MoveEffect_Contest_Tilemap[];
-extern const u16 gSummaryScreen_MoveEffect_Cancel_Tilemap[];
 
 extern const u32 gMoveTypes_Gfx[];
 extern const u32 gMoveTypes_Pal[];
@@ -4321,6 +4319,7 @@ extern const u32 gBattleArenaJudgementSymbolsGfx[];
 extern const u32 gBattleArenaJudgementSymbolsPalette[];
 
 extern const u32 gBattleWindowTextPalette[];
+extern const u16 gPPTextPalette[];
 
 extern const u32 gContest2Pal[];
 
