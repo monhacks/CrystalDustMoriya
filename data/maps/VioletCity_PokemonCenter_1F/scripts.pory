@@ -62,7 +62,7 @@ script VioletCity_PokemonCenter_1F_EventScript_Aide {
             message("{PLAYER} received the EGG\n"
                     "from ELM's AIDE.")
             waitfanfare
-            giveegg(SPECIES_TOGEPI)
+            special(GiveTogepiEgg)
             textcolor(MSG_COLOR_PREV)
             msgbox("We discovered that a {POKEMON} won't\n"
                    "hatch until it grows in the EGG.\p"

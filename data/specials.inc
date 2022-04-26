@@ -573,6 +573,7 @@ gSpecials::
 	def_special GivePlayerSpecialGiftMon
 	def_special CheckForGiftMonAndTakeMail
 	def_special GiveOddEgg
+	def_special GiveTogepiEgg
 	def_special DoMiniCredits
 	def_special DaisyGrooming
 	def_special OpenMuseumFossilPic

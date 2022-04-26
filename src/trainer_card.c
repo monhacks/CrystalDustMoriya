@@ -1785,7 +1785,7 @@ static void DrawStarsAndBadgesOnCard(void)
     static const u8 badgeYOffsets[] = {16, 15, 16};
 
     s16 i, x;
-    u16 tileNum = 192;
+    u16 tileNum = 704;
     u8 palNum = 3;
 
     FillBgTilemapBufferRect(3, 143, 15, starYOffsets[sData->cardType], sData->trainerCard.stars, 1, 4);

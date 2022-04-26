@@ -4763,6 +4763,14 @@ void GiveOddEgg(void)
     GiveMonToPlayer(&mon);
 }
 
+void GiveTogepiEgg(void)
+{
+    struct Pokemon mon;
+
+    CreateEgg(&mon, SPECIES_TOGEPI, MAPSEC_VIOLET_CITY, FALSE);
+    GiveMonToPlayer(&mon);
+}
+
 #define tState      data[0]
 #define tAdvance    data[1]
 #define tWindowId   data[2]
