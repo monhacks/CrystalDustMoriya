@@ -2840,10 +2840,10 @@ static void PrintMoveNameAndPP(u8 moveIndex)
         switch (GetCurrentPpToMaxPpState(summary->pp[moveIndex], pp))
         {
             case PP_FEW:
-                color = PSS_COLOR_PP_FEW;
+                color = PSS_COLOR_PP_SOME;
                 break;
             case PP_SOME:
-                color = PSS_COLOR_PP_SOME;
+                color = PSS_COLOR_PP_FEW;
                 break;
             case PP_NO_PP:
                 color = PSS_COLOR_PP_NO_PP;
