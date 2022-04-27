@@ -977,8 +977,8 @@ static const struct WindowTemplate sNewEntryInfoScreen_WindowTemplates[] =
     [WIN_FOOTPRINT] =
     {
         .bg = 2,
-        .tilemapLeft = 27,
-        .tilemapTop = 2,
+        .tilemapLeft = 26,
+        .tilemapTop = 3,
         .width = 2,
         .height = 2,
         .paletteNum = 15,
