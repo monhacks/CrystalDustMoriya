@@ -64,8 +64,8 @@ enum {
 };
 
 enum {
-    PP_FEW,
     PP_SOME,
+    PP_FEW,
     PP_NO_PP,
     PP_MANY
 };
@@ -459,12 +459,12 @@ enum
 {
     PSS_COLOR_WHITE_BLACK_SHADOW,
     PSS_COLOR_BLACK_GRAY_SHADOW,
+    PSS_COLOR_PP_MANY,
     PSS_COLOR_PP_SOME,
     PSS_COLOR_PP_FEW,
     PSS_COLOR_PP_NO_PP,
-    PSS_COLOR_PP_MANY,
-    PSS_COLOR_MALE_GENDER_SYMBOL,
     PSS_COLOR_FEMALE_GENDER_SYMBOL,
+    PSS_COLOR_MALE_GENDER_SYMBOL,
 };
 
 static const u8 sTextColors[][3] =
@@ -475,8 +475,8 @@ static const u8 sTextColors[][3] =
     [PSS_COLOR_PP_SOME]              = {0, 6, 7},
     [PSS_COLOR_PP_FEW]               = {0, 8, 9},
     [PSS_COLOR_PP_NO_PP]             = {0, 10, 11},
-    [PSS_COLOR_MALE_GENDER_SYMBOL]   = {0, 14, 15},
-    [PSS_COLOR_FEMALE_GENDER_SYMBOL] = {0, 12, 13}
+    [PSS_COLOR_FEMALE_GENDER_SYMBOL] = {0, 12, 13},
+    [PSS_COLOR_MALE_GENDER_SYMBOL]   = {0, 14, 15}
 };
 
 static void (*const sTextPrinterFunctions[])(void) =
@@ -1242,7 +1242,7 @@ static bool8 DecompressGraphics(void)
         sMonSummaryScreen->switchCounter++;
         break;
     case 3:
-        LoadCompressedPalette(gSummaryScreenPalette, 0, 0x160);
+        LoadCompressedPalette(gSummaryScreenPalette, 0, 0x140);
         sMonSummaryScreen->switchCounter++;
         break;
     case 4:
@@ -2839,17 +2839,17 @@ static void PrintMoveNameAndPP(u8 moveIndex)
         StringAppend(gStringVar1, gStringVar2);
         switch (GetCurrentPpToMaxPpState(summary->pp[moveIndex], pp))
         {
-            case PP_FEW:
-                color = PSS_COLOR_PP_SOME;
+            case PP_MANY:
+                color = PSS_COLOR_PP_MANY;
                 break;
             case PP_SOME:
+                color = PSS_COLOR_PP_SOME;
+                break;
+            case PP_FEW:
                 color = PSS_COLOR_PP_FEW;
                 break;
             case PP_NO_PP:
                 color = PSS_COLOR_PP_NO_PP;
-                break;
-            case PP_MANY:
-                color = PSS_COLOR_PP_MANY;
                 break;
         }
 

@@ -1329,7 +1329,7 @@ static const u8 sSearchMovementMap_ShiftHoennDex[SEARCH_COUNT][4] =
 
 static const struct SearchOptionText sDexModeOptions[] =
 {
-    [DEX_MODE_JOHTO]    = {gText_DexHoennDescription, gText_DexHoennTitle},
+    [DEX_MODE_JOHTO]    = {gText_DexJohtoDescription, gText_DexJohtoTitle},
     [DEX_MODE_NATIONAL] = {gText_DexNatDescription,   gText_DexNatTitle},
     {},
 };
@@ -2425,7 +2425,7 @@ static void CreateMonDexNum(u16 entryNum, u8 left, u8 top, u16 unused)
     text[2] = CHAR_0 + dexNum / 100;
     text[3] = CHAR_0 + (dexNum % 100) / 10;
     text[4] = CHAR_0 + (dexNum % 100) % 10;
-    PrintMonDexNumAndName(0, FONT_SMALL, text, left, top);
+    PrintMonDexNumAndName(0, 0, text, left, top);
 }
 
 static void CreateCaughtBall(bool16 owned, u8 x, u8 y, u16 unused)
@@ -2445,7 +2445,7 @@ static u8 CreateMonName(u16 num, u8 left, u8 top)
         str = gSpeciesNames[num];
     else
         str = sText_TenDashes;
-    PrintMonDexNumAndName(0, FONT_NORMAL, str, left, top);
+    PrintMonDexNumAndName(0, 2, str, left, top);
     return StringLength(str);
 }
 
@@ -3152,7 +3152,7 @@ static void PrintInfoScreenText(const u8* str, u8 left, u8 top)
     color[1] = 1;
     color[2] = 4;
 
-    AddTextPrinterParameterized4(0, FONT_NORMAL, left, top, 0, 0, color, -1, str);
+    AddTextPrinterParameterized4(0, 2, left, top, 0, 0, color, -1, str);
 }
 static void PrintInfoScreenTextSmall(const u8* str, u8 left, u8 top)
 {
@@ -3161,7 +3161,7 @@ static void PrintInfoScreenTextSmall(const u8* str, u8 left, u8 top)
     color[1] = 1;
     color[2] = 4;
 
-    AddTextPrinterParameterized4(0, FONT_SMALL, left, top, 0, 0, color, -1, str);
+    AddTextPrinterParameterized4(0, 0, left, top, 0, 0, color, -1, str);
 }
 
 #define tMonSpriteId data[4]
@@ -4441,7 +4441,7 @@ static void PrintInfoSubMenuText(u8 windowId, const u8 *str, u8 left, u8 top)
     color[1] = 1;
     color[2] = 4;
 
-    AddTextPrinterParameterized4(windowId, FONT_NORMAL, left, top, 0, 0, color, -1, str);
+    AddTextPrinterParameterized4(windowId, 2, left, top, 0, 0, color, -1, str);
 }
 
 static void UnusedPrintNum(u8 windowId, u16 num, u8 left, u8 top)
@@ -4749,7 +4749,7 @@ static void PrintSearchText(const u8 *str, u32 x, u32 y)
     color[0] = TEXT_COLOR_TRANSPARENT;
     color[1] = TEXT_DYNAMIC_COLOR_6;
     color[2] = TEXT_COLOR_DARK_GRAY;
-    AddTextPrinterParameterized4(0, FONT_NORMAL, x, y, 0, 0, color, -1, str);
+    AddTextPrinterParameterized4(0, 2, x, y, 0, 0, color, -1, str);
 }
 
 static void ClearSearchMenuRect(u32 x, u32 y, u32 width, u32 height)
