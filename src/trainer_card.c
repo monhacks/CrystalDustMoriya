@@ -409,10 +409,10 @@ static const u8 sTrainerCardStats[CARD_TYPE_COUNT][STAT_COUNT - 3] =
 
 static const u8 sTrainerCardFonts[4] =
 {
-    [CARD_TYPE_RS]           = FONT_RS,
-    [CARD_TYPE_FRLG]         = FONT_NORMAL,
-    [CARD_TYPE_EMERALD]      = FONT_EMERALD,
-    [CARD_TYPE_CRYSTALDUST]  = FONT_NORMAL,
+    [CARD_TYPE_RS]           = 3,
+    [CARD_TYPE_FRLG]         = 2,
+    [CARD_TYPE_EMERALD]      = 1,
+    [CARD_TYPE_CRYSTALDUST]  = 2,
 };
 
 static const u8 sTrainerCardNameMoneyPokedexXOffsets[CARD_TYPE_COUNT] =
@@ -666,7 +666,7 @@ static void Task_TrainerCard(u8 taskId)
     case STATE_WAIT_LINK_PARTNER:
         SetCloseLinkCallback();
         DrawDialogueFrame(0, 1);
-        AddTextPrinterParameterized(0, FONT_NORMAL, gText_WaitingTrainerFinishReading, 0, 1, 255, 0);
+        AddTextPrinterParameterized(0, 2, gText_WaitingTrainerFinishReading, 0, 1, 255, 0);
         CopyWindowToVram(0, 3);
         sData->mainState = STATE_CLOSE_CARD_LINK;
         break;
@@ -1260,7 +1260,7 @@ static void PrintNameOnCardFront(void)
     u8 x = sTrainerCardNameMoneyPokedexXOffsets[sData->cardType];
     if (sData->cardType == CARD_TYPE_RS)
     {
-        AddTextPrinterParameterized3(1, FONT_RS, x, 32, sTrainerCardRSTextColors, TEXT_SPEED_FF, gText_Name);
+        AddTextPrinterParameterized3(1, 3, x, 32, sTrainerCardRSTextColors, TEXT_SPEED_FF, gText_Name);
         txtPtr = StringCopy(buffer, sData->trainerCard.playerName);
         x += 32;
     }
