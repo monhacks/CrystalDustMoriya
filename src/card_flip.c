@@ -14,6 +14,8 @@
 #include "overworld.h"
 #include "palette.h"
 #include "pokemon_icon.h"
+#include "trainer_pokemon_sprites.h"
+#include "pokedex.h"
 #include "scanline_effect.h"
 #include "script.h"
 #include "sound.h"
@@ -44,10 +46,12 @@
 
 #define WIN_TEXT 0
 #define WIN_HELP 1
+#define WIN_LEVEL 2
 
+#define TAG_POKEMON_COLOR       510 //Needed to prevent color issues
 #define TAG_COIN_DIGIT          500
 #define TAG_CARD_NUMBER         501
-#define TAG_CARD_FRONT              502
+#define TAG_CARD_FRONT          502
 #define TAG_CARD_2              503
 #define TAG_CARD_BACK           504
 #define TAG_CARD_SELECTION      505
@@ -148,6 +152,7 @@ struct CardFlip
     u8 betOutlineSpriteIds[16];
     u8 roundCounterSpriteIds[12];
     u8 cardSelectionSoundTaskId;
+    u16 monSpriteId;
     MainCallback returnMainCallback;
 };
 
@@ -224,6 +229,14 @@ static const u8 sHelpBar_MoveSelect[] = _("{DPAD_ALL}MOVE {A_BUTTON}SELECT");
 static const u8 sHelpBar_BetPlace[] = _("{DPAD_ALL}BET {A_BUTTON}PLACE");
 static const u8 sHelpBar_Next[] = _("{A_BUTTON}NEXT");
 
+static const u8 sLevel1Text[] = _("Lv 1");
+static const u8 sLevel2Text[] = _("Lv 2");
+static const u8 sLevel3Text[] = _("Lv 3");
+static const u8 sLevel4Text[] = _("Lv 4");
+static const u8 sLevel5Text[] = _("Lv 5");
+static const u8 sLevel6Text[] = _("Lv 6");
+
+
 static const u32 sCardFlipBaseBgGfx[] = INCBIN_U32("graphics/card_flip/card_flip_base_bg_tiles.4bpp.lz");
 static const u16 sCardFlipBaseBgPalette[] = INCBIN_U16("graphics/card_flip/card_flip_base_bg_tiles.gbapal");
 static const u32 sCardFlipBaseBgTilemap[] = INCBIN_U32("graphics/card_flip/card_flip_base_bg_tilemap.bin.lz");
@@ -232,57 +245,9 @@ static const u16 sCoinDigitsPalette[] = INCBIN_U16("graphics/card_flip/coin_digi
 static const u32 sCardNumbersGfx[] = INCBIN_U32("graphics/card_flip/card_numbers.4bpp.lz");
 static const u16 sCardNumbersPalette[] = INCBIN_U16("graphics/card_flip/card_numbers.gbapal");
 
-static const u32 sCard_Pikachu1Gfx[] = INCBIN_U32("graphics/card_flip/pikachu_1.4bpp.lz");
-static const u16 sCard_Pikachu1Palette[] = INCBIN_U16("graphics/card_flip/pikachu_1.gbapal");
-static const u32 sCard_Pikachu2Gfx[] = INCBIN_U32("graphics/card_flip/pikachu_2.4bpp.lz");
-static const u16 sCard_Pikachu2Palette[] = INCBIN_U16("graphics/card_flip/pikachu_2.gbapal");
-static const u32 sCard_Pikachu3Gfx[] = INCBIN_U32("graphics/card_flip/pikachu_3.4bpp.lz");
-static const u16 sCard_Pikachu3Palette[] = INCBIN_U16("graphics/card_flip/pikachu_3.gbapal");
-static const u32 sCard_Pikachu4Gfx[] = INCBIN_U32("graphics/card_flip/pikachu_4.4bpp.lz");
-static const u16 sCard_Pikachu4Palette[] = INCBIN_U16("graphics/card_flip/pikachu_4.gbapal");
-static const u32 sCard_Pikachu5Gfx[] = INCBIN_U32("graphics/card_flip/pikachu_5.4bpp.lz");
-static const u16 sCard_Pikachu5Palette[] = INCBIN_U16("graphics/card_flip/pikachu_5.gbapal");
-static const u32 sCard_Pikachu6Gfx[] = INCBIN_U32("graphics/card_flip/pikachu_6.4bpp.lz");
-static const u16 sCard_Pikachu6Palette[] = INCBIN_U16("graphics/card_flip/pikachu_6.gbapal");
-static const u32 sCard_JigglyPuff1Gfx[] = INCBIN_U32("graphics/card_flip/jigglypuff_1.4bpp.lz");
-static const u16 sCard_JigglyPuff1Palette[] = INCBIN_U16("graphics/card_flip/jigglypuff_1.gbapal");
-static const u32 sCard_JigglyPuff2Gfx[] = INCBIN_U32("graphics/card_flip/jigglypuff_2.4bpp.lz");
-static const u16 sCard_JigglyPuff2Palette[] = INCBIN_U16("graphics/card_flip/jigglypuff_2.gbapal");
-static const u32 sCard_JigglyPuff3Gfx[] = INCBIN_U32("graphics/card_flip/jigglypuff_3.4bpp.lz");
-static const u16 sCard_JigglyPuff3Palette[] = INCBIN_U16("graphics/card_flip/jigglypuff_3.gbapal");
-static const u32 sCard_JigglyPuff4Gfx[] = INCBIN_U32("graphics/card_flip/jigglypuff_4.4bpp.lz");
-static const u16 sCard_JigglyPuff4Palette[] = INCBIN_U16("graphics/card_flip/jigglypuff_4.gbapal");
-static const u32 sCard_JigglyPuff5Gfx[] = INCBIN_U32("graphics/card_flip/jigglypuff_5.4bpp.lz");
-static const u16 sCard_JigglyPuff5Palette[] = INCBIN_U16("graphics/card_flip/jigglypuff_5.gbapal");
-static const u32 sCard_JigglyPuff6Gfx[] = INCBIN_U32("graphics/card_flip/jigglypuff_6.4bpp.lz");
-static const u16 sCard_JigglyPuff6Palette[] = INCBIN_U16("graphics/card_flip/jigglypuff_6.gbapal");
-static const u32 sCard_Poliwag1Gfx[] = INCBIN_U32("graphics/card_flip/poliwag_1.4bpp.lz");
-static const u16 sCard_Poliwag1Palette[] = INCBIN_U16("graphics/card_flip/poliwag_1.gbapal");
-static const u32 sCard_Poliwag2Gfx[] = INCBIN_U32("graphics/card_flip/poliwag_2.4bpp.lz");
-static const u16 sCard_Poliwag2Palette[] = INCBIN_U16("graphics/card_flip/poliwag_2.gbapal");
-static const u32 sCard_Poliwag3Gfx[] = INCBIN_U32("graphics/card_flip/poliwag_3.4bpp.lz");
-static const u16 sCard_Poliwag3Palette[] = INCBIN_U16("graphics/card_flip/poliwag_3.gbapal");
-static const u32 sCard_Poliwag4Gfx[] = INCBIN_U32("graphics/card_flip/poliwag_4.4bpp.lz");
-static const u16 sCard_Poliwag4Palette[] = INCBIN_U16("graphics/card_flip/poliwag_4.gbapal");
-static const u32 sCard_Poliwag5Gfx[] = INCBIN_U32("graphics/card_flip/poliwag_5.4bpp.lz");
-static const u16 sCard_Poliwag5Palette[] = INCBIN_U16("graphics/card_flip/poliwag_5.gbapal");
-static const u32 sCard_Poliwag6Gfx[] = INCBIN_U32("graphics/card_flip/poliwag_6.4bpp.lz");
-static const u16 sCard_Poliwag6Palette[] = INCBIN_U16("graphics/card_flip/poliwag_6.gbapal");
-static const u32 sCard_Oddish1Gfx[] = INCBIN_U32("graphics/card_flip/oddish_1.4bpp.lz");
-static const u16 sCard_Oddish1Palette[] = INCBIN_U16("graphics/card_flip/oddish_1.gbapal");
-static const u32 sCard_Oddish2Gfx[] = INCBIN_U32("graphics/card_flip/oddish_2.4bpp.lz");
-static const u16 sCard_Oddish2Palette[] = INCBIN_U16("graphics/card_flip/oddish_2.gbapal");
-static const u32 sCard_Oddish3Gfx[] = INCBIN_U32("graphics/card_flip/oddish_3.4bpp.lz");
-static const u16 sCard_Oddish3Palette[] = INCBIN_U16("graphics/card_flip/oddish_3.gbapal");
-static const u32 sCard_Oddish4Gfx[] = INCBIN_U32("graphics/card_flip/oddish_4.4bpp.lz");
-static const u16 sCard_Oddish4Palette[] = INCBIN_U16("graphics/card_flip/oddish_4.gbapal");
-static const u32 sCard_Oddish5Gfx[] = INCBIN_U32("graphics/card_flip/oddish_5.4bpp.lz");
-static const u16 sCard_Oddish5Palette[] = INCBIN_U16("graphics/card_flip/oddish_5.gbapal");
-static const u32 sCard_Oddish6Gfx[] = INCBIN_U32("graphics/card_flip/oddish_6.4bpp.lz");
-static const u16 sCard_Oddish6Palette[] = INCBIN_U16("graphics/card_flip/oddish_6.gbapal");
-
 static const u32 sCardBackGfx[] = INCBIN_U32("graphics/card_flip/card_back.4bpp.lz");
-static const u16 sCardBackPalette[] = INCBIN_U16("graphics/card_flip/card_back.gbapal");
+static const u32 sCardFrontGfx[] = INCBIN_U32("graphics/card_flip/card_front.4bpp.lz");
+static const u16 sCardPalette[] = INCBIN_U16("graphics/card_flip/card_back.gbapal");
 static const u32 sCard_SelectionGfx[] = INCBIN_U32("graphics/card_flip/card_selection.4bpp.lz");
 static const u16 sCard_SelectionPalette[] = INCBIN_U16("graphics/card_flip/card_selection.gbapal");
 
@@ -314,6 +279,15 @@ static const struct WindowTemplate sCardFlipWinTemplates[] = {
         .height = 2,
         .paletteNum = 11,
         .baseBlock = 0x117,
+    },
+    {
+        .bg = CARD_FLIP_BG_TEXT,
+        .tilemapLeft = 4,
+        .tilemapTop = 9,
+        .width = 5,
+        .height = 2,
+        .paletteNum = 11,
+        .baseBlock = 0x1,
     },
     DUMMY_WIN_TEMPLATE,
 };
@@ -501,58 +475,58 @@ static const struct SpriteTemplate sRoundCounterSpriteTemplate = {
     .callback = SpriteCallbackDummy,
 };
 
-static const u32 *const sCardSpriteGfx[] = {
-    sCard_Pikachu1Gfx,
-    sCard_Pikachu2Gfx,
-    sCard_Pikachu3Gfx,
-    sCard_Pikachu4Gfx,
-    sCard_Pikachu5Gfx,
-    sCard_Pikachu6Gfx,
-    sCard_JigglyPuff1Gfx,
-    sCard_JigglyPuff2Gfx,
-    sCard_JigglyPuff3Gfx,
-    sCard_JigglyPuff4Gfx,
-    sCard_JigglyPuff5Gfx,
-    sCard_JigglyPuff6Gfx,
-    sCard_Poliwag1Gfx,
-    sCard_Poliwag2Gfx,
-    sCard_Poliwag3Gfx,
-    sCard_Poliwag4Gfx,
-    sCard_Poliwag5Gfx,
-    sCard_Poliwag6Gfx,
-    sCard_Oddish1Gfx,
-    sCard_Oddish2Gfx,
-    sCard_Oddish3Gfx,
-    sCard_Oddish4Gfx,
-    sCard_Oddish5Gfx,
-    sCard_Oddish6Gfx,
+static const u16 cardMonSprite[] = {
+    SPECIES_PIKACHU,
+    SPECIES_PIKACHU,
+    SPECIES_PIKACHU,
+    SPECIES_PIKACHU,
+    SPECIES_PIKACHU,
+    SPECIES_PIKACHU,
+    SPECIES_JIGGLYPUFF,
+    SPECIES_JIGGLYPUFF,
+    SPECIES_JIGGLYPUFF,
+    SPECIES_JIGGLYPUFF,
+    SPECIES_JIGGLYPUFF,
+    SPECIES_JIGGLYPUFF,
+    SPECIES_POLIWAG,
+    SPECIES_POLIWAG,
+    SPECIES_POLIWAG,
+    SPECIES_POLIWAG,
+    SPECIES_POLIWAG,
+    SPECIES_POLIWAG,
+    SPECIES_ODDISH,
+    SPECIES_ODDISH,
+    SPECIES_ODDISH,
+    SPECIES_ODDISH,
+    SPECIES_ODDISH,
+    SPECIES_ODDISH,
 };
 
-static const u16 *const sCardSpritePalettes[] = {
-    sCard_Pikachu1Palette,
-    sCard_Pikachu2Palette,
-    sCard_Pikachu3Palette,
-    sCard_Pikachu4Palette,
-    sCard_Pikachu5Palette,
-    sCard_Pikachu6Palette,
-    sCard_JigglyPuff1Palette,
-    sCard_JigglyPuff2Palette,
-    sCard_JigglyPuff3Palette,
-    sCard_JigglyPuff4Palette,
-    sCard_JigglyPuff5Palette,
-    sCard_JigglyPuff6Palette,
-    sCard_Poliwag1Palette,
-    sCard_Poliwag2Palette,
-    sCard_Poliwag3Palette,
-    sCard_Poliwag4Palette,
-    sCard_Poliwag5Palette,
-    sCard_Poliwag6Palette,
-    sCard_Oddish1Palette,
-    sCard_Oddish2Palette,
-    sCard_Oddish3Palette,
-    sCard_Oddish4Palette,
-    sCard_Oddish5Palette,
-    sCard_Oddish6Palette,
+static const u8 *const cardLevelText[] = {
+    sLevel1Text,
+    sLevel2Text,
+    sLevel3Text,
+    sLevel4Text,
+    sLevel5Text,
+    sLevel6Text,
+    sLevel1Text,
+    sLevel2Text,
+    sLevel3Text,
+    sLevel4Text,
+    sLevel5Text,
+    sLevel6Text,
+    sLevel1Text,
+    sLevel2Text,
+    sLevel3Text,
+    sLevel4Text,
+    sLevel5Text,
+    sLevel6Text,
+    sLevel1Text,
+    sLevel2Text,
+    sLevel3Text,
+    sLevel4Text,
+    sLevel5Text,
+    sLevel6Text,
 };
 
 static const struct OamData sCardOamData = {
@@ -766,6 +740,7 @@ static const struct CompressedSpriteSheet sRoundCountersSpriteSheet = {
 };
 
 static const struct SpritePalette sCardFlipSpritePalettes[] = {
+    {sCoinDigitsPalette, TAG_POKEMON_COLOR},
     {sCoinDigitsPalette, TAG_COIN_DIGIT},
     {sCardNumbersPalette, TAG_CARD_NUMBER},
     {sBetOutlineHorizontalPalette, TAG_BET_OUTLINE_HORIZONTAL},
@@ -1808,7 +1783,9 @@ static void ProcessPlayAgainPromptInput(u8 taskId)
     if (selection == 0)
     {
         ClearDialogWindowAndFrame(0, TRUE);
+        ClearDialogWindowAndFrame(2, TRUE);
         RemoveCardNumberFromBoard(CARD_ID(sCardFlip->drawnCard));
+        FreeAndDestroyMonPicSprite(sCardFlip->monSpriteId);
         if (GetCoins() >= sCardFlip->numCoinsEntry)
         {
             gSprites[sCardFlip->cardFrontSpriteId].data[0] = taskId;
@@ -2075,7 +2052,7 @@ static void LoadCardBackGfx(void)
     spriteSheet.tag = TAG_CARD_BACK;
     LoadCompressedSpriteSheet(&spriteSheet);
 
-    spritePalette.data = sCardBackPalette;
+    spritePalette.data = sCardPalette;
     spritePalette.tag = TAG_CARD_BACK;
     LoadSpritePalette(&spritePalette);
 }
@@ -2100,14 +2077,31 @@ static void LoadCardGfx(int cardId)
     struct CompressedSpriteSheet spriteSheet;
     struct SpritePalette spritePalette;
 
-    spriteSheet.data = sCardSpriteGfx[cardId];
+    FillWindowPixelBuffer(WIN_LEVEL, PIXEL_FILL(0));
+
+    spriteSheet.data = sCardFrontGfx;
     spriteSheet.size = 0x800;
     spriteSheet.tag = TAG_CARD_FRONT;
     LoadCompressedSpriteSheet(&spriteSheet);
 
-    spritePalette.data = sCardSpritePalettes[cardId];
+    spritePalette.data = sCardPalette;
     spritePalette.tag = TAG_CARD_FRONT;
     LoadSpritePalette(&spritePalette);
+
+    u8 spriteId = CreateMonSpriteFromNationalDexNumber(cardMonSprite[cardId], 48, 62, 0);
+
+    gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_OFF;
+    gSprites[spriteId].oam.priority = 1;
+    sCardFlip->monSpriteId = spriteId;
+
+    u8 color[3];
+    color[0] = TEXT_COLOR_TRANSPARENT;
+    color[1] = 1;
+    color[2] = 2;
+
+    AddTextPrinterParameterized4(WIN_LEVEL, 2, 4, 0, 0, 0, color, NULL, cardLevelText[cardId]);
+    PutWindowTilemap(WIN_LEVEL);
+    CopyWindowToVram(WIN_LEVEL, 3);
 }
 
 static void CardEntry_SpriteCallback(struct Sprite *sprite)
@@ -2287,6 +2281,7 @@ static void HighlightCardNumber(struct Sprite *sprite)
 #undef CARD_FLIP_BG_BET_OUTLINE
 #undef CARD_FLIP_BG_BASE
 #undef WIN_TEXT
+#undef WIN_LEVEL
 #undef TAG_COIN_DIGIT
 #undef TAG_CARD_NUMBER
 #undef TAG_CARD_FRONT
@@ -2297,6 +2292,7 @@ static void HighlightCardNumber(struct Sprite *sprite)
 #undef TAG_BET_OUTLINE_VERTICAL
 #undef TAG_BET_OUTLINE_VERTICAL_SMALL
 #undef TAG_ROUND_COUNTERS
+#undef TAG_POKEMON_COLOR
 #undef NUM_NUMBERS
 #undef NUM_SUITS
 #undef NUM_CARDS
