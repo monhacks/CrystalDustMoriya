@@ -348,6 +348,7 @@ static const u16 sRaichuLevelUpLearnset[] = {
     LEVEL_UP_MOVE( 1, MOVE_TAIL_WHIP),
     LEVEL_UP_MOVE( 1, MOVE_QUICK_ATTACK),
     LEVEL_UP_MOVE( 1, MOVE_THUNDERBOLT),
+    LEVEL_UP_MOVE(41, MOVE_THUNDER),
     LEVEL_UP_END
 };
 
@@ -477,6 +478,7 @@ static const u16 sClefableLevelUpLearnset[] = {
     LEVEL_UP_MOVE( 1, MOVE_DOUBLE_SLAP),
     LEVEL_UP_MOVE( 1, MOVE_MINIMIZE),
     LEVEL_UP_MOVE( 1, MOVE_METRONOME),
+    LEVEL_UP_MOVE(45, MOVE_METEOR_MASH),
     LEVEL_UP_END
 };
 
@@ -524,6 +526,7 @@ static const u16 sWigglytuffLevelUpLearnset[] = {
     LEVEL_UP_MOVE( 1, MOVE_DISABLE),
     LEVEL_UP_MOVE( 1, MOVE_DEFENSE_CURL),
     LEVEL_UP_MOVE( 1, MOVE_DOUBLE_SLAP),
+    LEVEL_UP_MOVE(44, MOVE_HYPER_VOICE),
     LEVEL_UP_END
 };
 
@@ -952,13 +955,13 @@ static const u16 sWeepinbellLevelUpLearnset[] = {
 };
 
 static const u16 sVictreebelLevelUpLearnset[] = {
-    LEVEL_UP_MOVE( 1, MOVE_STOCKPILE),
-    LEVEL_UP_MOVE( 1, MOVE_SPIT_UP),
-    LEVEL_UP_MOVE( 1, MOVE_SWALLOW),
     LEVEL_UP_MOVE( 1, MOVE_VINE_WHIP),
     LEVEL_UP_MOVE( 1, MOVE_SLEEP_POWDER),
     LEVEL_UP_MOVE( 1, MOVE_SWEET_SCENT),
     LEVEL_UP_MOVE( 1, MOVE_RAZOR_LEAF),
+    LEVEL_UP_MOVE(42, MOVE_STOCKPILE),
+    LEVEL_UP_MOVE(42, MOVE_SPIT_UP),
+    LEVEL_UP_MOVE(42, MOVE_SWALLOW),
     LEVEL_UP_END
 };
 
@@ -1711,6 +1714,7 @@ static const u16 sStarmieLevelUpLearnset[] = {
     LEVEL_UP_MOVE( 1, MOVE_RECOVER),
     LEVEL_UP_MOVE( 1, MOVE_SWIFT),
     LEVEL_UP_MOVE(33, MOVE_CONFUSE_RAY),
+    LEVEL_UP_MOVE(42, MOVE_PSYCHIC),
     LEVEL_UP_END
 };
 
@@ -3953,6 +3957,7 @@ static const u16 sLudicoloLevelUpLearnset[] = {
     LEVEL_UP_MOVE( 1, MOVE_GROWL),
     LEVEL_UP_MOVE( 1, MOVE_ABSORB),
     LEVEL_UP_MOVE( 1, MOVE_NATURE_POWER),
+    LEVEL_UP_MOVE(49, MOVE_HYDRO_PUMP),
     LEVEL_UP_END
 };
 
@@ -3986,6 +3991,7 @@ static const u16 sShiftryLevelUpLearnset[] = {
     LEVEL_UP_MOVE( 1, MOVE_HARDEN),
     LEVEL_UP_MOVE( 1, MOVE_GROWTH),
     LEVEL_UP_MOVE( 1, MOVE_NATURE_POWER),
+    LEVEL_UP_MOVE(49, MOVE_EXTRASENSORY),
     LEVEL_UP_END
 };
 
@@ -4224,6 +4230,8 @@ static const u16 sDelcattyLevelUpLearnset[] = {
     LEVEL_UP_MOVE( 1, MOVE_ATTRACT),
     LEVEL_UP_MOVE( 1, MOVE_SING),
     LEVEL_UP_MOVE( 1, MOVE_DOUBLE_SLAP),
+    LEVEL_UP_MOVE(19, MOVE_ASSIST),
+    LEVEL_UP_MOVE(37, MOVE_HEAL_BELL),
     LEVEL_UP_END
 };
 
