@@ -838,7 +838,7 @@ const struct MonCoords gMonFrontPicCoords[] =
     [SPECIES_SPINARAK] =
     {
         .size = 0x54,
-        .y_offset = 19,
+        .y_offset = 15,
     },
     [SPECIES_ARIADOS] =
     {
