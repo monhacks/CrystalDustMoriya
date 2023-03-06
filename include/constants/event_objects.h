@@ -272,8 +272,10 @@
 #define OBJ_EVENT_GFX_ZWOOPER_DOLL               268
 #define OBJ_EVENT_GFX_ZGOLD_SHIELD               269
 #define OBJ_EVENT_GFX_ZSILVER_SHIELD             270
+#define OBJ_EVENT_GFX_CELEBI                     271
+#define OBJ_EVENT_GFX_SEAGALLOP                  272
 
-#define NUM_OBJ_EVENT_GFX                        271
+#define NUM_OBJ_EVENT_GFX                        273
 
 
 // These are dynamic object gfx ids.
