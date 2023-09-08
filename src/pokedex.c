@@ -2386,6 +2386,12 @@ static void ReplaceMonSpriteAtPos(u16 selectedMon, u16 ignored)
     {
         spriteId = ReplacePokedexMonSprite(dexNum, 0x30, 0x38);
         gSprites[spriteId].callback = SpriteCB_PokedexListMonSprite;
+        gSprites[spriteId].data[5] = 0;
+        gSprites[spriteId].oam.mosaic = TRUE;
+        gSprites[spriteId].data[0] = 10;
+        gSprites[spriteId].data[1] = 1;
+        gSprites[spriteId].callback = SpriteCB_DisplayMonMosaic;
+        SetGpuReg(REG_OFFSET_MOSAIC, (gSprites[spriteId].data[0] << 12) | (gSprites[spriteId].data[0] << 8));
     }
 
     CreateMonListEntry(0, selectedMon, ignored);
@@ -2436,6 +2442,13 @@ static void CreateScrollingPokemonSprite(u8 direction, u16 selectedMon)
     {
         spriteId = ReplacePokedexMonSprite(dexNum, 0x30, 0x38);
         gSprites[spriteId].callback = SpriteCB_PokedexListMonSprite;
+        gSprites[spriteId].callback = SpriteCB_PokedexListMonSprite;
+        gSprites[spriteId].data[5] = 0;
+        gSprites[spriteId].oam.mosaic = TRUE;
+        gSprites[spriteId].data[0] = 10;
+        gSprites[spriteId].data[1] = 1;
+        gSprites[spriteId].callback = SpriteCB_DisplayMonMosaic;
+        SetGpuReg(REG_OFFSET_MOSAIC, (gSprites[spriteId].data[0] << 12) | (gSprites[spriteId].data[0] << 8));
     }
     gPaletteFade.bufferTransferDisabled = FALSE;
     switch (direction)
@@ -2610,7 +2623,7 @@ static u32 ReplacePokedexMonSprite(u16 num, s16 x, s16 y)
 {
 	FreeAndDestroyMonPicSprite(sPokedexView->selectedMonSpriteId);
     sPokedexView->selectedMonSpriteId = CreateMonSpriteFromNationalDexNumberAutoPaletteSlot(num, x, y);
-    gSprites[sPokedexView->selectedMonSpriteId].oam.affineMode = ST_OAM_AFFINE_OFF;
+    gSprites[sPokedexView->selectedMonSpriteId].oam.affineMode = ST_OAM_AFFINE_NORMAL;
     gSprites[sPokedexView->selectedMonSpriteId].oam.priority = 3;
     gSprites[sPokedexView->selectedMonSpriteId].data[0] = 0;
     gSprites[sPokedexView->selectedMonSpriteId].data[1] = 0;
