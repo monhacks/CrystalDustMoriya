@@ -2469,19 +2469,6 @@ static void CreateScrollingPokemonSprite(u8 direction, u16 selectedMon)
     gPaletteFade.bufferTransferDisabled = FALSE;
 }
 
-static void SpriteCB_DisplayMonMosaic(struct Sprite *sprite)
-{
-    sprite->data[0] -= sprite->data[1];
-    if (sprite->data[0] < 0)
-        sprite->data[0] = 0;
-    SetGpuReg(REG_OFFSET_MOSAIC, (sprite->data[0] << 12) | (sprite->data[0] << 8));
-    if (sprite->data[0] == 0)
-    {
-        sprite->oam.mosaic = FALSE;
-        sprite->callback = SpriteCallbackDummy;
-    }
-}
-
 // u16 ignored is passed but never used
 static u16 TryDoPokedexScroll(u16 selectedMon, u16 ignored)
 {
@@ -2850,8 +2837,31 @@ static void SpriteCB_SeenOwnInfo(struct Sprite *sprite)
         DestroySprite(sprite);
 }
 
+static void SpriteCB_DisplayMonMosaic(struct Sprite *sprite)
+{
+    sprite->data[0] -= sprite->data[1];
+    if (sprite->data[0] < 0)
+        sprite->data[0] = 0;
+    SetGpuReg(REG_OFFSET_MOSAIC, (sprite->data[0] << 12) | (sprite->data[0] << 8));
+    if (sprite->data[0] == 0)
+    {
+        sprite->oam.mosaic = FALSE;
+        sprite->callback = SpriteCallbackDummy;
+    }
+}
+
 void SpriteCB_MoveMonForInfoScreen(struct Sprite *sprite)
 {
+    //finish the mosiac
+    sprite->data[0] -= sprite->data[1];
+    if (sprite->data[0] < 0)
+        sprite->data[0] = 0;
+    SetGpuReg(REG_OFFSET_MOSAIC, (sprite->data[0] << 12) | (sprite->data[0] << 8));
+    if (sprite->data[0] == 0)
+    {
+        sprite->oam.mosaic = FALSE;
+    }
+
     sprite->oam.priority = 0;
     sprite->oam.affineMode = ST_OAM_AFFINE_OFF;
     sprite->x2 = 0;
