@@ -3025,6 +3025,7 @@ static void HidePageSpecificSprites(void)
 
     for (i = 0; i < EXP_BAR_SPRITES_COUNT; i++)
         sExpBar->sprites[i]->invisible = TRUE;
+}
 
 static void SetTypeIcons(void)
 {
