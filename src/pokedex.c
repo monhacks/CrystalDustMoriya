@@ -2482,7 +2482,7 @@ static u16 TryDoPokedexScroll(u16 selectedMon, u16 ignored)
     {
         scrollDir = 1;
         selectedMon = GetNextPosition(1, selectedMon, 0, sPokedexView->pokemonListCount - 1);
-        ClearMonSprites();
+        ClearMonSprite();
         CreateScrollingPokemonSprite(1, selectedMon);
         CreateMonListEntry(1, selectedMon, ignored);
         PlaySE(SE_DEX_SCROLL);
@@ -2491,7 +2491,7 @@ static u16 TryDoPokedexScroll(u16 selectedMon, u16 ignored)
     {
         scrollDir = 2;
         selectedMon = GetNextPosition(0, selectedMon, 0, sPokedexView->pokemonListCount - 1);
-        ClearMonSprites();
+        ClearMonSprite();
         CreateScrollingPokemonSprite(2, selectedMon);
         CreateMonListEntry(2, selectedMon, ignored);
         PlaySE(SE_DEX_SCROLL);
