@@ -1903,10 +1903,10 @@ void Task_SwitchPageInMoveSelect(u8 taskId)
             data[0]++;
             break;
         case 4:
-            if (sMonSummaryScreen->firstMoveIndex == MAX_MON_MOVES)
-                PrintMoveDetails(sMonSummaryScreen->newMove);
-            else
+            if (sMonSummaryScreen->firstMoveIndex != MAX_MON_MOVES)
                 PrintMoveDetails(sMonSummaryScreen->summary.moves[sMonSummaryScreen->firstMoveIndex]);
+            else if (sMonSummaryScreen->newMove != MOVE_NONE)
+                PrintMoveDetails(sMonSummaryScreen->newMove);
             PutWindowTilemap(WINDOW_ARR_ID_MOVES_WINDOW_LEFT);
             data[0]++;
             break;
@@ -3025,7 +3025,6 @@ static void HidePageSpecificSprites(void)
 
     for (i = 0; i < EXP_BAR_SPRITES_COUNT; i++)
         sExpBar->sprites[i]->invisible = TRUE;
-}
 
 static void SetTypeIcons(void)
 {
