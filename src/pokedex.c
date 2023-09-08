@@ -2859,11 +2859,11 @@ void SpriteCB_MoveMonForInfoScreen(struct Sprite *sprite)
     SetGpuReg(REG_OFFSET_MOSAIC, (sprite->data[0] << 12) | (sprite->data[0] << 8));
     if (sprite->data[0] == 0)
     {
+        sprite->oam.affineMode = ST_OAM_AFFINE_OFF;
         sprite->oam.mosaic = FALSE;
     }
 
     sprite->oam.priority = 0;
-    sprite->oam.affineMode = ST_OAM_AFFINE_OFF;
     sprite->x2 = 0;
     sprite->y2 = 0;
     if (sprite->x != 44 || sprite->y != 48)
