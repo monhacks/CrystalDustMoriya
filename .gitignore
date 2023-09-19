@@ -46,3 +46,5 @@ data/scripts/move_tutors.inc
 .settings/org.eclipse.cdt.core.prefs
 berry_fix/ld_script.sed
 berry_fix/payload/ld_script.sed
+porymap.project.cfg
+porymap.user.cfg
